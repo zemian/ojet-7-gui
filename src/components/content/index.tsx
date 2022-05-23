@@ -1,11 +1,11 @@
 import { h } from "preact";
 
-import {Counter} from "../gui/Counter";
+import {TemperatureConverter} from "../gui/TemperatureConverter";
 
 export function Content() {
   return (
     <div class="oj-web-applayout-max-width oj-web-applayout-content">
-      <Counter></Counter>
+      <TemperatureConverter></TemperatureConverter>
     </div>
   );
 };
