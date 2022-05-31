@@ -15,8 +15,8 @@ type Props = {
 @customElement("app-root")
 export class App extends Component<ExtendGlobalProps<Props>> {
     static defaultProps: Props = {
-        appName: 'App Name',
-        userLogin: "john.hancock@oracle.com"
+        appName: '7 GUIs - A GUI Programming Benchmark',
+        userLogin: "zemian.deng@oracle.com"
     };
 
     routes = [
