@@ -1,9 +1,9 @@
 import {customElement, ExtendGlobalProps} from "ojs/ojvcomponent";
 import {h, Component, ComponentChild} from "preact";
-import Context = require("ojs/ojcontext");
 import {Footer} from "./footer";
 import {Header} from "./header";
 import {Content} from "./content/index";
+import Context = require("ojs/ojcontext");
 import CoreRouter = require("ojs/ojcorerouter");
 import UrlParamAdapter = require("ojs/ojurlparamadapter");
 
