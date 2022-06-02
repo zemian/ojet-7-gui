@@ -4,8 +4,11 @@ import { useState } from "preact/hooks";
 import "ojs/ojinputtext";
 
 /*
- * We are using JET 'event.detail.updatedFrom' to tell the update call to avoid duplicated
- * invocation where there could be extra call by 'external'.
+ * We are using JET 'event.detail.updatedFrom' to tell whether to update or not in order to avoid duplicated
+ * invocation where there could be extra call by 'external' during re-render().
+ *
+ * You may also workaround above issue by simply creating a wrapper components on "oj-input-text"
+ * to avoid the re-render() based on external change.
  */
 export function TemperatureConverter () {
     const [celsius, setCelsius] = useState(0);
