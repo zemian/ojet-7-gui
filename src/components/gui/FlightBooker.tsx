@@ -29,7 +29,7 @@ export function FlightBooker () {
     const flightTypesDP = new ArrayDataProvider(flightTypes, {keyAttributes: "value"});
     const [departureDate, setDepartureDate] = useState(dateToString(new Date()));
     const [returnDate, setReturnDate] = useState(departureDate);
-    const [disbaledBooking, setDisabledBooking] = useState(false);
+    const [disabledBooking, setDisabledBooking] = useState(false);
     const onFlightTypeChanged = (e) => setFlightType(e.detail.value);
     const onDepartureDateChanged = (e) => setDepartureDate(e.detail.value);
     const onReturnDateChanged = (e) => setReturnDate(e.detail.value);
@@ -60,7 +60,7 @@ export function FlightBooker () {
                 <oj-input-text value={returnDate} onvalueChanged={onReturnDateChanged} disabled={flightType !== 'return'}></oj-input-text>
             </div>
             <div>
-                <oj-button onojAction={book} disabled={disbaledBooking}>Book</oj-button>
+                <oj-button onojAction={book} disabled={disabledBooking}>Book</oj-button>
             </div>
         </div>
     );
