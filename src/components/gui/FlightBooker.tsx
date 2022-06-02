@@ -22,11 +22,10 @@ export function FlightBooker () {
     }
 
     const [flightType, setFlightType] = useState('one-way');
-    const flightTypes = [
+    const [flightTypesDP] = useState(new ArrayDataProvider([
         {value: 'one-way', label: 'One-Way Flight'},
         {value: 'return', label: 'Return Flight'},
-    ];
-    const flightTypesDP = new ArrayDataProvider(flightTypes, {keyAttributes: "value"});
+    ], {keyAttributes: "value"}));
     const [departureDate, setDepartureDate] = useState(dateToString(new Date()));
     const [returnDate, setReturnDate] = useState(departureDate);
     const [disabledBooking, setDisabledBooking] = useState(false);
