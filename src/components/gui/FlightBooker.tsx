@@ -8,27 +8,22 @@ import "ojs/ojoption";
 import "ojs/ojmessagebanner";
 import ArrayDataProvider = require("ojs/ojarraydataprovider");
 import MutableArrayDataProvider = require("ojs/ojmutablearraydataprovider");
+import {IntlDateTimeConverter} from "ojs/ojconverter-datetime";
+import {IntlConverterUtils} from "ojs/ojconverterutils-i18n";
 
 export function FlightBooker () {
-    function pad(n, s = String(n)) {
-        return s.length < 2 ? `0${s}` : s;
-    }
-    const stringToDate = (str) => {
-        const [y, m, d] = str.split('-');
-        return new Date(parseInt(y), m - 1, d);
-    }
-    const dateToString = (date) => {
-        return date.getFullYear() + '-' +
-            pad(date.getMonth() + 1) + '-' +
-            pad(date.getDate());
-    }
-
+    const dateConverter = new IntlDateTimeConverter({
+        formatType: "date",
+        day: "2-digit",
+        month: "2-digit",
+        year: "numeric"
+    });
     const [flightType, setFlightType] = useState('one-way');
     const [flightTypesDP] = useState(new ArrayDataProvider([
         {value: 'one-way', label: 'One-Way Flight'},
         {value: 'return', label: 'Return Flight'},
     ], {keyAttributes: "value"}));
-    const [departureDate, setDepartureDate] = useState(dateToString(new Date()));
+    const [departureDate, setDepartureDate] = useState(IntlConverterUtils.dateToLocalIso(new Date()));
     const [returnDate, setReturnDate] = useState(departureDate);
     const [disabledBooking, setDisabledBooking] = useState(false);
     const onFlightTypeChanged = (e) => setFlightType(e.detail.value);
@@ -39,14 +34,19 @@ export function FlightBooker () {
 
     useEffect(() => {
         const isDisabled = (flightType === 'return' &&
-            stringToDate(returnDate) <= stringToDate(departureDate));
+            IntlConverterUtils.isoToDate(returnDate) <= IntlConverterUtils.isoToDate(departureDate));
         setDisabledBooking(isDisabled);
     }, [flightType, returnDate, departureDate]);
 
     const book = () => {
-        const details = flightType === 'return'
-                ? `You have booked a return flight leaving on ${departureDate} and returning on ${returnDate}.`
-                : `You have booked a one-way flight leaving on ${departureDate}.`
+        const formattedDepartureDate = dateConverter.format(departureDate);
+        let details;
+        if (flightType === 'return') {
+            const formattedReturnDate = dateConverter.format(returnDate);
+            details = `You have booked a return flight leaving on ${formattedDepartureDate} and returning on ${formattedReturnDate}.`;
+        } else {
+            details = `You have booked a one-way flight leaving on ${formattedDepartureDate}.`;
+        }
         messagesDP.data = [{
             id: 1,
             severity: 'confirmation',
@@ -67,10 +67,10 @@ export function FlightBooker () {
                 </oj-select-single>
             </div>
             <div>
-                <oj-input-text value={departureDate} onvalueChanged={onDepartureDateChanged}></oj-input-text>
+                <oj-input-date value={departureDate} onvalueChanged={onDepartureDateChanged} converter={dateConverter}></oj-input-date>
             </div>
             <div>
-                <oj-input-text value={returnDate} onvalueChanged={onReturnDateChanged} disabled={flightType !== 'return'}></oj-input-text>
+                <oj-input-date value={returnDate} onvalueChanged={onReturnDateChanged} converter={dateConverter} disabled={flightType !== 'return'}></oj-input-date>
             </div>
             <div>
                 <oj-button onojAction={book} disabled={disabledBooking}>Book</oj-button>
