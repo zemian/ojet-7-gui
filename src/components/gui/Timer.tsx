@@ -6,11 +6,11 @@ import "ojs/ojslider";
 import "ojs/ojbutton";
 
 /*
- Due to how Preact update render, we need setTimeout() AND not recurse into it, because render() will
- update itself for the next setTimeout().
-
- NOTE: You can not use setInterval() this this example, since the repeated interval will not cause
- Preact states to change!
+ * Due to how Preact update render, we need setTimeout() AND not recurse into it, because render() will
+ * update itself for the next setTimeout().
+ *
+ * NOTE: You can not use setInterval() this this example, since the repeated interval will not cause
+ * Preact states to change!
  */
 export function Timer () {
     const [duration, durationSetter] = useState(15 * 1000); // 15 secs
