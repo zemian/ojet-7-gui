@@ -25,28 +25,28 @@ export class App extends Component<ExtendGlobalProps<Props>> {
             path: "counter",
             detail: {
                 label: "Counter",
-                iconClass: "oj-navigationlist-item-icon oj-ux-ico-binding-control"
+                iconClass: "oj-navigationlist-item-icon oj-ux-ico-flower-application"
             }
         },
         {
             path: "flightbooker",
             detail: {
                 label: "Flight Booker",
-                iconClass: "oj-navigationlist-item-icon oj-ux-ico-binding-control"
+                iconClass: "oj-navigationlist-item-icon oj-ux-ico-flower-application"
             }
         },
         {
             path: "tempconverter",
             detail: {
                 label: "Tempature Converter",
-                iconClass: "oj-navigationlist-item-icon oj-ux-ico-binding-control"
+                iconClass: "oj-navigationlist-item-icon oj-ux-ico-flower-application"
             }
         },
         {
             path: "timer",
             detail: {
                 label: "Timer",
-                iconClass: "oj-navigationlist-item-icon oj-ux-ico-binding-control"
+                iconClass: "oj-navigationlist-item-icon oj-ux-ico-flower-application"
             }
         }
     ];
