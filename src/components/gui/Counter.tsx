@@ -8,7 +8,7 @@ export function Counter () {
     const onAction = () => setCount(count + 1);
     return (
         <div>
-            <p>{count}</p>
+            <p>Counter: {count}</p>
             <oj-button onojAction={onAction}>Count</oj-button>
         </div>
     );
