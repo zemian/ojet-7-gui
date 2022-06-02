@@ -41,6 +41,13 @@ export class App extends Component<ExtendGlobalProps<Props>> {
                 label: "Tempature Converter",
                 iconClass: "oj-navigationlist-item-icon oj-ux-ico-binding-control"
             }
+        },
+        {
+            path: "timer",
+            detail: {
+                label: "Timer",
+                iconClass: "oj-navigationlist-item-icon oj-ux-ico-binding-control"
+            }
         }
     ];
 

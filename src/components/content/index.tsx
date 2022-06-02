@@ -1,14 +1,15 @@
 import {h} from "preact";
 import {useMemo} from "preact/hooks";
 
-import {Counter} from "../gui/Counter";
-import {FlightBooker} from "../gui/FlightBooker";
-import {TemperatureConverter} from "../gui/TemperatureConverter";
-
 import "ojs/ojnavigationlist";
 import ArrayDataProvider = require("ojs/ojarraydataprovider");
 import {ojNavigationList} from "ojs/ojnavigationlist";
 import {Route} from "ojs/ojcorerouter";
+
+import {Counter} from "../gui/Counter";
+import {FlightBooker} from "../gui/FlightBooker";
+import {TemperatureConverter} from "../gui/TemperatureConverter";
+import {Timer} from "../gui/Timer";
 
 export function Content(props) {
     const routesDP = useMemo(() =>
@@ -34,6 +35,8 @@ export function Content(props) {
                 return <FlightBooker />;
             case "tempconverter":
                 return <TemperatureConverter />;
+            case "timer":
+                return <Timer />;
             default:
                 return <Counter />;
         }
