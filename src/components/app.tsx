@@ -48,6 +48,13 @@ export class App extends Component<ExtendGlobalProps<Props>> {
                 label: "Timer",
                 iconClass: "oj-navigationlist-item-icon oj-ux-ico-flower-application"
             }
+        },
+        {
+            path: "crud",
+            detail: {
+                label: "CRUD",
+                iconClass: "oj-navigationlist-item-icon oj-ux-ico-flower-application"
+            }
         }
     ];
 

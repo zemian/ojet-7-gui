@@ -10,6 +10,7 @@ import {Counter} from "../gui/Counter";
 import {FlightBooker} from "../gui/FlightBooker";
 import {TemperatureConverter} from "../gui/TemperatureConverter";
 import {Timer} from "../gui/Timer";
+import {CRUD} from "../gui/CRUD";
 
 export function Content(props) {
     const routesDP = useMemo(() =>
@@ -37,6 +38,8 @@ export function Content(props) {
                 return <TemperatureConverter />;
             case "timer":
                 return <Timer />;
+            case "crud":
+                return <CRUD />;
             default:
                 return <Counter />;
         }
