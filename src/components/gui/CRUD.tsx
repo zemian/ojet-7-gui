@@ -119,7 +119,9 @@ export function CRUD () {
     return (
         <div class="oj-flex oj-sm-flex-direction-column oj-sm-margin-2x">
             <div className="oj-flex-item">
-                <oj-input-text label-hint="Filter" value={filter} onrawValueChanged={onFilterChanged}></oj-input-text>
+                <oj-input-text label-hint="Filter by Last Name"
+                               value={filter}
+                               onrawValueChanged={onFilterChanged}></oj-input-text>
             </div>
             <div className="oj-flex-item">
                 <div class="oj-flex oj-sm-margin-2x">
