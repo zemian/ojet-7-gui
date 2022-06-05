@@ -43,14 +43,14 @@ export function FlightBooker () {
         let details;
         if (flightType === 'return') {
             const formattedReturnDate = dateConverter.format(returnDate);
-            details = `You have booked a return flight leaving on ${formattedDepartureDate} and returning on ${formattedReturnDate}.`;
+            details = `The flight will leave on ${formattedDepartureDate} and return on ${formattedReturnDate}.`;
         } else {
-            details = `You have booked a one-way flight leaving on ${formattedDepartureDate}.`;
+            details = `The flight will leave on ${formattedDepartureDate}.`;
         }
         messagesDP.data = [{
             id: 1,
             severity: 'confirmation',
-            summary: `Confirmation`,
+            summary: `Your Flight Has Been Booked!`,
             detail: details
         }];
     }
@@ -60,20 +60,26 @@ export function FlightBooker () {
     }
 
     return (
-        <div class="oj-sm-width-1/3">
+        <div>
             <oj-message-banner data={messagesDP} onojClose={onMessageClose}></oj-message-banner>
-            <div>
-                <oj-select-single data={flightTypesDP} value={flightType} onvalueChanged={onFlightTypeChanged}>
-                </oj-select-single>
-            </div>
-            <div>
-                <oj-input-date value={departureDate} onvalueChanged={onDepartureDateChanged} converter={dateConverter}></oj-input-date>
-            </div>
-            <div>
-                <oj-input-date value={returnDate} onvalueChanged={onReturnDateChanged} converter={dateConverter} disabled={flightType !== 'return'}></oj-input-date>
-            </div>
-            <div>
-                <oj-button onojAction={book} disabled={disabledBooking}>Book</oj-button>
+            <div class="oj-sm-width-2/5">
+                <div>
+                    <oj-select-single data={flightTypesDP} value={flightType} onvalueChanged={onFlightTypeChanged}>
+                    </oj-select-single>
+                </div>
+                <div>
+                    <oj-input-date value={departureDate} onvalueChanged={onDepartureDateChanged}
+                                   converter={dateConverter}></oj-input-date>
+                </div>
+                <div>
+                    <oj-input-date value={returnDate} onvalueChanged={onReturnDateChanged} converter={dateConverter}
+                                   disabled={flightType !== 'return'}></oj-input-date>
+                </div>
+                <div>
+                    <oj-button onojAction={book} disabled={disabledBooking}>Book</oj-button>
+                </div>
+                {flightType === 'return' && disabledBooking ?
+                    <p>NOTE: A return flight requires a return date later than leave date to book.</p> : ''}
             </div>
         </div>
     );

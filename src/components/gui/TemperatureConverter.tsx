@@ -36,13 +36,15 @@ export function TemperatureConverter () {
 
 
     return (
-        <div class="oj-sm-width-1/3">
-            <p>Enter value then press Tab to convert it.</p>
-            <p>Celsius:</p>
-            <oj-input-text value={celsius} onvalueChanged={onCelsiusChanged}></oj-input-text>
+        <div>
+            <p>Enter a value into either input and then press Tab to convert it.</p>
+            <div class="oj-sm-width-1/3">
+                <p>Celsius:</p>
+                <oj-input-text value={celsius} onvalueChanged={onCelsiusChanged}></oj-input-text>
 
-            <p>Fahrenheit:</p>
-            <oj-input-text value={fahrenheit} onvalueChanged={onFahrenheitChanged}></oj-input-text>
+                <p>Fahrenheit:</p>
+                <oj-input-text value={fahrenheit} onvalueChanged={onFahrenheitChanged}></oj-input-text>
+            </div>
         </div>
     );
 }
