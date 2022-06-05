@@ -23,19 +23,19 @@ export function FlightBooker () {
         {value: 'one-way', label: 'One-Way Flight'},
         {value: 'return', label: 'Return Flight'},
     ], {keyAttributes: "value"}));
-    const [departureDate, setDepartureDate] = useState(IntlConverterUtils.dateToLocalIso(new Date()));
-    const [returnDate, setReturnDate] = useState(departureDate);
-    const [disabledBooking, setDisabledBooking] = useState(false);
+    const [departureDate, departureDateSetter] = useState(IntlConverterUtils.dateToLocalIso(new Date()));
+    const [returnDate, returnDateSetter] = useState(departureDate);
+    const [disabledBooking, disabledBookingSetter] = useState(false);
     const onFlightTypeChanged = (e) => setFlightType(e.detail.value);
-    const onDepartureDateChanged = (e) => setDepartureDate(e.detail.value);
-    const onReturnDateChanged = (e) => setReturnDate(e.detail.value);
+    const onDepartureDateChanged = (e) => departureDateSetter(e.detail.value);
+    const onReturnDateChanged = (e) => returnDateSetter(e.detail.value);
 
     const [messagesDP] = useState(new MutableArrayDataProvider([], {keyAttributes: "id"}));
 
     useEffect(() => {
         const isDisabled = (flightType === 'return' &&
             IntlConverterUtils.isoToDate(returnDate) <= IntlConverterUtils.isoToDate(departureDate));
-        setDisabledBooking(isDisabled);
+        disabledBookingSetter(isDisabled);
     }, [flightType, returnDate, departureDate]);
 
     const book = () => {

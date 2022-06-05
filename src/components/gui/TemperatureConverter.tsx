@@ -11,16 +11,16 @@ import "ojs/ojinputtext";
  * to avoid the re-render() based on external change.
  */
 export function TemperatureConverter () {
-    const [celsius, setCelsius] = useState(0);
-    const [fahrenheit, setFahrenheit] = useState(32);
+    const [celsius, celsiusSetter] = useState(0);
+    const [fahrenheit, fahrenheitSetter] = useState(32);
 
     const onCelsiusChanged = (event: CustomEvent) => {
         console.log("onCelsiusChanged", event);
         if (event.detail.updatedFrom === 'internal') {
             const newValue = event.detail.value;
-            setCelsius(newValue);
+            celsiusSetter(newValue);
             const newF = newValue * (9 / 5) + 32;
-            setFahrenheit(newF);
+            fahrenheitSetter(newF);
         }
     }
 
@@ -28,9 +28,9 @@ export function TemperatureConverter () {
         console.log("onFahrenheitChanged", event);
         if (event.detail.updatedFrom === 'internal') {
             const newValue = event.detail.value;
-            setFahrenheit(newValue);
+            fahrenheitSetter(newValue);
             const newC = (newValue - 32) * (5 / 9);
-            setCelsius(newC);
+            celsiusSetter(newC);
         }
     }
 
