@@ -16,7 +16,7 @@ type Circle = {
 type Action = {
     type: string,
     circle: Circle,
-    radius?: number
+    circleOriginal?: Circle
 }
 
 // History tracking needs to be outside of the component states
@@ -44,7 +44,7 @@ export function CircleDrawer () {
             // If user did some undo then create new circle, we need to chop off the history
             actionHistories = actionHistories.slice(0, undoIndex);
         }
-        actionHistories.push({type: 'circle', circle: circle});
+        actionHistories.push({type: 'circle', circle: Object.assign({}, circle)});
         undoIndex = undoIndex + 1;
     };
     const onContextMenu = (event, circle) => {
@@ -52,14 +52,25 @@ export function CircleDrawer () {
         selectedCircleSetter(circle);
     };
 
-    const onRadiusChanged = (event) => {
+    const onTransientRadiusChanged = (event) => {
         const radius = event.detail.value;
         selectedCircle.r = radius;
         updateCountSetter(updateCount + 1);
-
-        // Track history
-        actionHistories.push({type: 'radius', circle: selectedCircle, radius: radius});
     };
+
+    const onRadiusChanged = () => {
+        const circle = Object.assign({}, selectedCircle);
+        const originalCircleAction = actionHistories.find(e => e.circle.id === selectedCircle.id);
+        actionHistories.push({type: 'resize', circle: circle, circleOriginal: originalCircleAction.circle});
+        undoIndex = undoIndex + 1;
+        selectedCircleSetter(null);
+    };
+
+    const updateCirclesWithRadius = (action) => {
+        const circle = circles.find(e => e.id === action.circle.id);
+        circle.r = action.circleOriginal.r;
+        circlesSetter([...circles]);
+    }
 
     const onUndo = () => {
         // Undo should work on previous index value, but
@@ -73,14 +84,11 @@ export function CircleDrawer () {
                 circles.pop();
                 circlesSetter([...circles]);
             } else {
-                const circle = circles.find(e => e.id === action.circle.id);
-                if (circle) {
-                    circle.r = action.radius;
-                    updateCountSetter(updateCount + 1);
-                }
+                updateCirclesWithRadius(action);
             }
         }
     };
+
     const onRedo = () => {
         // Redo should use the next index value, which is just undoIndex
         if (undoIndex > 0 && undoIndex < actionHistories.length) {
@@ -89,6 +97,8 @@ export function CircleDrawer () {
 
             if (action.type === 'circle') {
                 circlesSetter([...circles, action.circle]);
+            } else {
+                updateCirclesWithRadius(action);
             }
         }
     };
@@ -98,7 +108,7 @@ export function CircleDrawer () {
             <p>Click to drawer circle</p>
             <oj-button onojAction={onUndo}>Undo</oj-button>
             <oj-button onojAction={onRedo}>Redo</oj-button>
-            <div id="drawing-canvas" style="height: 75vh; width: 100%; border: 1px solid black;">
+            <div id="drawing-canvas" style="height: 50vh; width: 100%; border: 1px solid black;">
                 <svg style="width: 100%; height: 100%;" onClick={onClick} onContextMenu={event => event.preventDefault()}>
                     {circles.map(circle =>
                         <circle cx={circle.x} cy={circle.y} r={circle.r} fill={'yellow'}
@@ -114,7 +124,8 @@ export function CircleDrawer () {
                         <p>Adjust the circle radius:</p>
                         <oj-slider min={10} max={200}
                                    value={selectedCircle.r}
-                                   ontransientValueChanged={onRadiusChanged}></oj-slider>
+                                   ontransientValueChanged={onTransientRadiusChanged}></oj-slider>
+                        <oj-button onojAction={onRadiusChanged}>Done</oj-button>
                     </div>
                 </div> : '' }
         </div>
