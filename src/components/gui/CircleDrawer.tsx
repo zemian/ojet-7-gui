@@ -1,10 +1,9 @@
 import { h } from "preact";
-import {useEffect, useState} from "preact/hooks";
+import { useState } from "preact/hooks";
 
 import "ojs/ojbutton";
 import "ojs/ojpopup";
 import "ojs/ojslider";
-import {PopupElement} from "ojs/ojpopup";
 
 type Circle = {
     id: number
@@ -16,7 +15,7 @@ type Circle = {
 type Action = {
     type: string,
     circle: Circle,
-    circleOriginal?: Circle
+    originalCircle?: Circle
 }
 
 // History tracking needs to be outside of the component states
@@ -59,9 +58,10 @@ export function CircleDrawer () {
     };
 
     const onRadiusChanged = () => {
+        // Whe circle size is changed, we want to keep history of original Circle so we can Undo/Redo.
         const circle = Object.assign({}, selectedCircle);
         const originalCircleAction = actionHistories.find(e => e.circle.id === selectedCircle.id);
-        actionHistories.push({type: 'resize', circle: circle, circleOriginal: originalCircleAction.circle});
+        actionHistories.push({type: 'resize', circle: circle, originalCircle: originalCircleAction.circle});
         undoIndex = undoIndex + 1;
         selectedCircleSetter(null);
     };
@@ -79,7 +79,7 @@ export function CircleDrawer () {
                 circlesSetter([...circles]);
             } else {
                 const circle = circles.find(e => e.id === action.circle.id);
-                circle.r = action.circleOriginal.r;
+                circle.r = action.originalCircle.r;
                 circlesSetter([...circles]);
             }
         }
