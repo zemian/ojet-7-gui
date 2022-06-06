@@ -66,12 +66,6 @@ export function CircleDrawer () {
         selectedCircleSetter(null);
     };
 
-    const updateCirclesWithRadius = (action) => {
-        const circle = circles.find(e => e.id === action.circle.id);
-        circle.r = action.circleOriginal.r;
-        circlesSetter([...circles]);
-    }
-
     const onUndo = () => {
         // Undo should work on previous index value, but
         // undoIndex is holding the next index value! So undo should work on previous (or -1)
@@ -84,7 +78,9 @@ export function CircleDrawer () {
                 circles.pop();
                 circlesSetter([...circles]);
             } else {
-                updateCirclesWithRadius(action);
+                const circle = circles.find(e => e.id === action.circle.id);
+                circle.r = action.circleOriginal.r;
+                circlesSetter([...circles]);
             }
         }
     };
@@ -98,7 +94,9 @@ export function CircleDrawer () {
             if (action.type === 'circle') {
                 circlesSetter([...circles, action.circle]);
             } else {
-                updateCirclesWithRadius(action);
+                const circle = circles.find(e => e.id === action.circle.id);
+                circle.r = action.circle.r;
+                circlesSetter([...circles]);
             }
         }
     };
