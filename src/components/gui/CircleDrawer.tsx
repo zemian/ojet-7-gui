@@ -123,7 +123,7 @@ export function CircleDrawer () {
                         <oj-slider min={10} max={200}
                                    value={selectedCircle.r}
                                    ontransientValueChanged={onTransientRadiusChanged}></oj-slider>
-                        <oj-button onojAction={onRadiusChanged}>Done</oj-button>
+                        <oj-button onojAction={onRadiusChanged}>Save</oj-button>
                     </div>
                 </div> : '' }
         </div>
