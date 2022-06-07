@@ -109,7 +109,7 @@ export function CircleDrawer () {
             <div id="drawing-canvas" style="height: 50vh; width: 100%; border: 1px solid black;">
                 <svg style="width: 100%; height: 100%;" onClick={onClick} onContextMenu={event => event.preventDefault()}>
                     {circles.map(circle =>
-                        <circle cx={circle.x} cy={circle.y} r={circle.r} fill={'yellow'}
+                        <circle key={circle.id} cx={circle.x} cy={circle.y} r={circle.r} fill={'yellow'}
                                 onContextMenu={event => onContextMenu(event, circle)}>
                         </circle>
                     )}
