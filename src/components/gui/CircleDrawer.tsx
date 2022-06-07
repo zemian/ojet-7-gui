@@ -2,6 +2,7 @@ import { h } from "preact";
 import { useState } from "preact/hooks";
 
 import "ojs/ojbutton";
+import "ojs/ojtoolbar";
 import "ojs/ojpopup";
 import "ojs/ojslider";
 
@@ -104,8 +105,10 @@ export function CircleDrawer () {
     return (
         <div>
             <p>Click to drawer circle</p>
-            <oj-button onojAction={onUndo}>Undo</oj-button>
-            <oj-button onojAction={onRedo}>Redo</oj-button>
+            <oj-toolbar>
+                <oj-button onojAction={onUndo}>Undo</oj-button>
+                <oj-button onojAction={onRedo}>Redo</oj-button>
+            </oj-toolbar>
             <div id="drawing-canvas" style="height: 50vh; width: 100%; border: 1px solid black;">
                 <svg style="width: 100%; height: 100%;" onClick={onClick} onContextMenu={event => event.preventDefault()}>
                     {circles.map(circle =>

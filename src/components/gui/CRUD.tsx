@@ -2,6 +2,7 @@ import { h } from "preact";
 import {useEffect, useState} from "preact/hooks";
 
 import "ojs/ojbutton";
+import "ojs/ojtoolbar";
 import "ojs/ojlistview";
 import "ojs/ojinputtext";
 import MutableArrayDataProvider = require("ojs/ojmutablearraydataprovider");
@@ -144,9 +145,11 @@ export function CRUD () {
                 </div>
             </div>
             <div className="oj-flex-item">
-                <oj-button onojAction={onCreate}>Create</oj-button>
-                <oj-button onojAction={onUpdate}>Update</oj-button>
-                <oj-button onojAction={onDelete}>Delete</oj-button>
+                <oj-toolbar>
+                    <oj-button onojAction={onCreate}>Create</oj-button>
+                    <oj-button onojAction={onUpdate}>Update</oj-button>
+                    <oj-button onojAction={onDelete}>Delete</oj-button>
+                </oj-toolbar>
             </div>
         </div>
     );
