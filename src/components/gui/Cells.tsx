@@ -36,12 +36,17 @@ export function Cells () {
         for (let i = 0; i < 20; i++) {
             data[i] = new Array(5);
             for (let j = 0; j < 5; j++) {
-                data[i][j] = {id: i * 5 + (j + 1), value: ''};
+                data[i][j] = '';
             }
         }
         dataDP.data = data;
         //updateCountSetter(updateCount + 1);
     }, []);
+
+    const onEdit = (rowIndex, colIndex, event) => {
+        const newValue = event.detail.value;
+        dataDP.data[rowIndex][colIndex] = newValue;
+    }
 
     const rowsTemplateRender = (cell) => {
         return (
@@ -50,12 +55,16 @@ export function Cells () {
             </div>
         );
     }
+
     const valueTemplateRender = (cell) => {
-        const value = dataDP.data[cell.index][cell.columnIndex - 1].value;
+        const rowIndex = cell.index;
+        const colIndex = cell.columnIndex - 1;
+        const value = dataDP.data[rowIndex][colIndex];
         return (
             <div>
                 { (cell.mode === 'edit') ?
-                    <oj-input-text value={value} class="editable"></oj-input-text>
+                    <oj-input-text value={value}
+                                   onvalueChanged={(event) => onEdit(rowIndex, colIndex, event)}></oj-input-text>
                     : <span>{value}</span>
                 }
             </div>
