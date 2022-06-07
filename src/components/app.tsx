@@ -25,49 +25,49 @@ export class App extends Component<ExtendGlobalProps<Props>> {
             path: "counter",
             detail: {
                 label: "Counter",
-                iconClass: "oj-navigationlist-item-icon oj-ux-ico-flower-application"
+                iconClass: "oj-navigationlist-item-icon oj-ux-ico-mouse"
             }
         },
         {
             path: "flightbooker",
             detail: {
                 label: "Flight Booker",
-                iconClass: "oj-navigationlist-item-icon oj-ux-ico-flower-application"
+                iconClass: "oj-navigationlist-item-icon oj-ux-ico-airport"
             }
         },
         {
             path: "tempconverter",
             detail: {
                 label: "Tempature Converter",
-                iconClass: "oj-navigationlist-item-icon oj-ux-ico-flower-application"
+                iconClass: "oj-navigationlist-item-icon oj-ux-ico-weather-thermometer"
             }
         },
         {
             path: "timer",
             detail: {
                 label: "Timer",
-                iconClass: "oj-navigationlist-item-icon oj-ux-ico-flower-application"
+                iconClass: "oj-navigationlist-item-icon oj-ux-ico-timer"
             }
         },
         {
             path: "crud",
             detail: {
                 label: "CRUD",
-                iconClass: "oj-navigationlist-item-icon oj-ux-ico-flower-application"
+                iconClass: "oj-navigationlist-item-icon oj-ux-ico-add-edit-page"
             }
         },
         {
             path: "circledrawer",
             detail: {
                 label: "Circle Drawer",
-                iconClass: "oj-navigationlist-item-icon oj-ux-ico-flower-application"
+                iconClass: "oj-navigationlist-item-icon oj-ux-ico-circle"
             }
         },
         {
             path: "cells",
             detail: {
                 label: "Cells",
-                iconClass: "oj-navigationlist-item-icon oj-ux-ico-flower-application"
+                iconClass: "oj-navigationlist-item-icon oj-ux-ico-file-spreadsheet"
             }
         }
     ];
