@@ -12,6 +12,7 @@ import {TemperatureConverter} from "../gui/TemperatureConverter";
 import {Timer} from "../gui/Timer";
 import {CRUD} from "../gui/CRUD";
 import {CircleDrawer} from "../gui/CircleDrawer";
+import {Cells} from "../gui/Cells";
 
 export function Content(props) {
     const routesDP = useMemo(() =>
@@ -43,6 +44,8 @@ export function Content(props) {
                 return <CRUD />;
             case "circledrawer":
                 return <CircleDrawer />;
+            case "cells":
+                return <Cells />;
             default:
                 return <Counter />;
         }

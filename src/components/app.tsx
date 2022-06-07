@@ -62,6 +62,13 @@ export class App extends Component<ExtendGlobalProps<Props>> {
                 label: "Circle Drawer",
                 iconClass: "oj-navigationlist-item-icon oj-ux-ico-flower-application"
             }
+        },
+        {
+            path: "cells",
+            detail: {
+                label: "Cells",
+                iconClass: "oj-navigationlist-item-icon oj-ux-ico-flower-application"
+            }
         }
     ];
 
