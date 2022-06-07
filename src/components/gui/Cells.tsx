@@ -19,23 +19,27 @@ export function Cells () {
             return {sortable: 'disabled'}
         }, []);
 
-    const columns = useMemo<Column<any, any>[]>(() =>
-            [
-                {id: 'rows', headerText: '', template: 'rowsTemplate',
-                    className: 'oj-helper-text-align-end oj-read-only'},
-                {id: 'A', headerText: 'A', template: 'valueTemplate'},
-                {id: 'B', headerText: 'B', template: 'valueTemplate'},
-                {id: 'C', headerText: 'C', template: 'valueTemplate'},
-                {id: 'D', headerText: 'D', template: 'valueTemplate'},
-                {id: 'E', headerText: 'E', template: 'valueTemplate'},
-            ]
+    const columns = useMemo<Column<any, any>[]>(() => {
+            const cols =[
+                    {
+                        id: 'rows', headerText: '', template: 'rowsTemplate',
+                        className: 'oj-helper-text-align-end oj-read-only'
+                    }
+                ];
+            for (let j = 0; j < 26; j++) {
+                const letter = String.fromCharCode('A'.charCodeAt(0) + j);
+                cols.push({id: letter, headerText: letter, template: 'valueTemplate'} as any);
+            }
+            return cols;
+        }
         , []);
 
     useEffect(() => {
-        const data = new Array(20);
-        for (let i = 0; i < 20; i++) {
-            data[i] = new Array(5);
-            for (let j = 0; j < 5; j++) {
+        const rowCount = 99;
+        const data = new Array(rowCount);
+        for (let i = 0; i < rowCount; i++) {
+            data[i] = new Array(columns.length);
+            for (let j = 0; j < columns.length; j++) {
                 data[i][j] = '';
             }
         }
@@ -97,7 +101,7 @@ export function Cells () {
         <div>
             <oj-table data={dataDP} columnsDefault={defaultColumns} columns={columns}
                       verticalGridVisible="enabled"
-                      layout="fixed" editMode="rowEdit" style="width: 100%;">
+                      layout="fixed" editMode="rowEdit" style="width: 100%; height: 90vh;">
                 <template slot="rowsTemplate" render={rowsTemplateRender}></template>
                 <template slot="valueTemplate" render={valueTemplateRender}></template>
             </oj-table>
