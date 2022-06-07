@@ -40,13 +40,35 @@ export function Cells () {
             }
         }
         dataDP.data = data;
-        //updateCountSetter(updateCount + 1);
     }, []);
 
     const onEdit = (rowIndex, colIndex, event) => {
-        const newValue = event.detail.value;
-        dataDP.data[rowIndex][colIndex] = newValue;
+        let newValue = event.detail.value;
+        if (newValue) {
+            newValue = ('' + newValue).trim();
+        }
+        dataDP.data[rowIndex][colIndex] = newValue.trim();
+        updateCountSetter(updateCount + 1);
     }
+
+    const getCellValue = (cellName: string) => {
+        const [_, colLetter, rowNum] = cellName.match(/([A-Z])(\d{1,2})/);
+        const colIndex = colLetter.charCodeAt(0) - 65;
+        const rowIndex = parseInt(rowNum) - 1;
+        return evalCell(dataDP.data[rowIndex][colIndex]);
+    }
+
+    const evalCell = (value) => {
+        if (value.startsWith('=')) {
+            const matcher = value.match(/=\s*([A-Z]\d{1,2})\s*([\+\-\*\/])\s*([A-Z]\d{1,2})\s*/);
+            if (matcher) {
+                const [_, a, op, b] = matcher;
+                const expression = getCellValue(a) + op + getCellValue(b);
+                return eval(expression);
+            }
+        }
+        return value;
+    };
 
     const rowsTemplateRender = (cell) => {
         return (
@@ -63,7 +85,7 @@ export function Cells () {
         return (
             <div>
                 { (cell.mode === 'edit') ?
-                    <oj-input-text value={value}
+                    <oj-input-text value={evalCell(value)}
                                    onvalueChanged={(event) => onEdit(rowIndex, colIndex, event)}></oj-input-text>
                     : <span>{value}</span>
                 }
