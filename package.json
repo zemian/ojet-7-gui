@@ -15,7 +15,7 @@
     "underscore": "^1.10.2"
   },
   "scripts": {
-    "build": "ojet build --release"
+    "build": "npx ojet build --release"
   },
   "engines": {
     "node": ">=12.21.0"
