@@ -1,5 +1,5 @@
 import { h } from "preact";
-import { useState, useEffect } from "preact/hooks";
+import { useState, useEffect, useMemo } from "preact/hooks";
 
 import "ojs/ojbutton";
 import "ojs/ojdatetimepicker";
@@ -18,19 +18,24 @@ export function FlightBooker () {
         month: "2-digit",
         year: "numeric"
     });
+
     const [flightType, setFlightType] = useState('one-way');
-    const [flightTypesDP] = useState(new ArrayDataProvider([
-        {value: 'one-way', label: 'One-Way Flight'},
-        {value: 'return', label: 'Return Flight'},
-    ], {keyAttributes: "value"}));
     const [departureDate, departureDateSetter] = useState(IntlConverterUtils.dateToLocalIso(new Date()));
     const [returnDate, returnDateSetter] = useState(departureDate);
     const [disabledBooking, disabledBookingSetter] = useState(false);
+
+    const flightTypesDP = useMemo(() =>
+        new ArrayDataProvider([
+            {value: 'one-way', label: 'One-Way Flight'},
+            {value: 'return', label: 'Return Flight'},
+        ], {keyAttributes: "value"}), []);
+    const messagesDP = useMemo(() =>
+        new MutableArrayDataProvider([], {keyAttributes: "id"})
+        , []);
+
     const onFlightTypeChanged = (e) => setFlightType(e.detail.value);
     const onDepartureDateChanged = (e) => departureDateSetter(e.detail.value);
     const onReturnDateChanged = (e) => returnDateSetter(e.detail.value);
-
-    const [messagesDP] = useState(new MutableArrayDataProvider([], {keyAttributes: "id"}));
 
     useEffect(() => {
         const isDisabled = (flightType === 'return' &&
@@ -53,11 +58,11 @@ export function FlightBooker () {
             summary: `Your Flight Has Been Booked!`,
             detail: details
         }];
-    }
+    };
 
     const onMessageClose = () => {
         messagesDP.data = [];
-    }
+    };
 
     return (
         <div>

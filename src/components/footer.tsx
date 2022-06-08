@@ -21,7 +21,7 @@ const _DEFAULT_LINKS: FooterLink[] = [
         linkId: "7GUIs",
         linkTarget: "https://eugenkiss.github.io/7guis/"
     }
-]
+];
 
 export function Footer({links = _DEFAULT_LINKS}: Props) {
     return (

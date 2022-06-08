@@ -1,5 +1,5 @@
 import { h } from "preact";
-import {useEffect, useState} from "preact/hooks";
+import {useEffect, useState, useMemo} from "preact/hooks";
 
 import "ojs/ojbutton";
 import "ojs/ojtoolbar";
@@ -20,10 +20,12 @@ export function CRUD () {
         {id: 3, firstName: "Roman", lastName: "Tisch"}
     ]);
     const [idCounter, idCounterSetter] = useState(personList.length);
-    const [personListDP] = useState(
-        new MutableArrayDataProvider<string, Person>(personList, {keyAttributes: "id"}));
     const [selectedPerson, selectedPersonSetter] = useState<Person>(null);
     const [filter, filterSetter] = useState(null);
+
+    const personListDP = useMemo(() =>
+            new MutableArrayDataProvider<string, Person>(personList, {keyAttributes: "id"})
+        , []);
 
     useEffect(() => {
         personListDP.data = personList;
@@ -115,7 +117,7 @@ export function CRUD () {
     };
 
     const namesItemTemplate = (item) =>
-        <div>{item.data.lastName}, {item.data.firstName}</div>
+        <div>{item.data.lastName}, {item.data.firstName}</div>;
 
     return (
         <div class="oj-flex oj-sm-flex-direction-column oj-sm-margin-2x">

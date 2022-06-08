@@ -22,7 +22,7 @@ export function TemperatureConverter () {
             const newF = newValue * (9 / 5) + 32;
             fahrenheitSetter(newF);
         }
-    }
+    };
 
     const onFahrenheitChanged = (event: CustomEvent) => {
         console.log("onFahrenheitChanged", event);
@@ -32,8 +32,7 @@ export function TemperatureConverter () {
             const newC = (newValue - 32) * (5 / 9);
             celsiusSetter(newC);
         }
-    }
-
+    };
 
     return (
         <div>

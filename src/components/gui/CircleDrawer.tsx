@@ -50,6 +50,7 @@ export function CircleDrawer () {
         history.stack.push({type: 'circle', circle: Object.assign({}, circle)});
         history.index = history.index + 1;
     };
+
     const onContextMenu = (event, circle) => {
         event.preventDefault(); // prevent native browser context menu to display.
         selectedCircleSetter(circle);

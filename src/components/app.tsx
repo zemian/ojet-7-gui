@@ -78,6 +78,10 @@ export class App extends Component<ExtendGlobalProps<Props>> {
 
     state = { currentRoutePath: "" };
 
+    changeRoute = (routePath: string) => {
+        this.router.go({ path: routePath });
+    };
+
     constructor(props: ExtendGlobalProps<Props>) {
         super(props);
         this.router.currentState.subscribe(this.onRouteChanged.bind(this));
@@ -89,10 +93,6 @@ export class App extends Component<ExtendGlobalProps<Props>> {
         const routePath = actionable.state?.path;
         this.setState({ currentRoutePath: routePath });
     }
-
-    changeRoute = (routePath: string) => {
-        this.router.go({ path: routePath });
-    };
 
     render(props: ExtendGlobalProps<Props>): ComponentChild {
         return (

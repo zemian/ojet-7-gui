@@ -53,14 +53,14 @@ export function Cells () {
         }
         dataDP.data[rowIndex][colIndex] = newValue.trim();
         updateCountSetter(updateCount + 1);
-    }
+    };
 
     const getCellValue = (cellName: string) => {
         const [_, colLetter, rowNum] = cellName.match(/([A-Z])(\d{1,2})/);
         const colIndex = colLetter.charCodeAt(0) - 65;
         const rowIndex = parseInt(rowNum) - 1;
         return evalCell(dataDP.data[rowIndex][colIndex]);
-    }
+    };
 
     const evalCell = (value) => {
         if (value.startsWith('=')) {
@@ -80,7 +80,7 @@ export function Cells () {
                 <span style="font-weight: bold;">{cell.index + 1}</span>
             </div>
         );
-    }
+    };
 
     const valueTemplateRender = (cell) => {
         const rowIndex = cell.index;
