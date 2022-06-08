@@ -1,5 +1,5 @@
 import { h } from "preact";
-import { useState } from "preact/hooks";
+import {useMemo, useState} from "preact/hooks";
 
 import "ojs/ojbutton";
 import "ojs/ojtoolbar";
@@ -19,15 +19,18 @@ type Action = {
     originalCircle?: Circle
 }
 
-// History tracking needs to be outside of the component states
-let undoIndex = 0;
-let actionHistories = new Array<Action>();
-
 export function CircleDrawer () {
     const [updateCount, updateCountSetter] = useState<number>(0);
     const [idCounter, idCounterSetter] = useState<number>(0);
     const [circles, circlesSetter] = useState<Array<Circle>>([]);
     const [selectedCircle, selectedCircleSetter] = useState<Circle>(null);
+
+    const history = useMemo(() => {
+        return {
+            index: 0,
+            stack: new Array<Action>()
+        }
+    }, []);
 
     const onClick = (event) => {
         // Add new circle
@@ -40,12 +43,12 @@ export function CircleDrawer () {
         circlesSetter([...circles, circle]);
 
         // Track history
-        if (undoIndex < actionHistories.length) {
+        if (history.index < history.stack.length) {
             // If user did some undo then create new circle, we need to chop off the history
-            actionHistories = actionHistories.slice(0, undoIndex);
+            history.stack = history.stack.slice(0, history.index);
         }
-        actionHistories.push({type: 'circle', circle: Object.assign({}, circle)});
-        undoIndex = undoIndex + 1;
+        history.stack.push({type: 'circle', circle: Object.assign({}, circle)});
+        history.index = history.index + 1;
     };
     const onContextMenu = (event, circle) => {
         event.preventDefault(); // prevent native browser context menu to display.
@@ -61,19 +64,19 @@ export function CircleDrawer () {
     const onRadiusChanged = () => {
         // Whe circle size is changed, we want to keep history of original Circle so we can Undo/Redo.
         const circle = Object.assign({}, selectedCircle);
-        const originalCircleAction = actionHistories.find(e => e.circle.id === selectedCircle.id);
-        actionHistories.push({type: 'resize', circle: circle, originalCircle: originalCircleAction.circle});
-        undoIndex = undoIndex + 1;
+        const originalCircleAction = history.stack.find(e => e.circle.id === selectedCircle.id);
+        history.stack.push({type: 'resize', circle: circle, originalCircle: originalCircleAction.circle});
+        history.index = history.index + 1;
         selectedCircleSetter(null);
     };
 
     const onUndo = () => {
         // Undo should work on previous index value, but
-        // undoIndex is holding the next index value! So undo should work on previous (or -1)
-        const undoIndexValue = undoIndex - 1;
-        if (undoIndex > 0 && undoIndexValue < actionHistories.length) {
-            const action = actionHistories[undoIndexValue];
-            undoIndex = undoIndexValue;
+        // history.index is holding the next index value! So undo should work on previous (or -1)
+        const undoIndexValue = history.index - 1;
+        if (history.index > 0 && undoIndexValue < history.stack.length) {
+            const action = history.stack[undoIndexValue];
+            history.index = undoIndexValue;
 
             if (action.type === 'circle') {
                 circles.pop();
@@ -87,10 +90,10 @@ export function CircleDrawer () {
     };
 
     const onRedo = () => {
-        // Redo should use the next index value, which is just undoIndex
-        if (undoIndex > 0 && undoIndex < actionHistories.length) {
-            const action = actionHistories[undoIndex];
-            undoIndex = undoIndex + 1;
+        // Redo should use the next index value, which is just history.index
+        if (history.index > 0 && history.index < history.stack.length) {
+            const action = history.stack[history.index];
+            history.index = history.index + 1;
 
             if (action.type === 'circle') {
                 circlesSetter([...circles, action.circle]);
