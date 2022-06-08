@@ -8,4 +8,4 @@ Project Source: https://github.com/zemian/ojet-7-gui
 
 ## Related project
 
-I have done similar project with [Oracle JET 10 implementations examples](https://github.com/zemian/oraclejet-for-vuejs-examples) as well. These are examples are implemented using KnockoutJS view models.
+I have done similar project with different exmaples on [Oracle JET 10](https://github.com/zemian/oraclejet-for-vuejs-examples) as well. These examples are implemented using older KnockoutJS view models instead of Preact VDOM implementation.
