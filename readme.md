@@ -12,4 +12,4 @@ Featured Blog: https://zemian.github.io/blog/2022/7-gui-tasks-with-oracle-jet/
 
 ## Related project
 
-I have done similar project with different exmaples on [Oracle JET 9](https://github.com/zemian/oraclejet-for-vuejs-examples) as well. These examples are implemented using older KnockoutJS view models instead of Preact VDOM implementation.
+I have done similar project in the past with different exmaples on [Oracle JET 9](https://github.com/zemian/oraclejet-for-vuejs-examples) as well. These examples are implemented using older KnockoutJS view models instead of Preact VDOM implementation.
