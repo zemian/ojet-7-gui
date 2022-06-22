@@ -8,6 +8,8 @@ Project Source: https://github.com/zemian/ojet-7-gui
 
 Live DEMO: https://rococo-tanuki-521a94.netlify.app/
 
+Featured Blog: https://zemian.github.io/blog/2022/7-gui-tasks-with-oracle-jet/
+
 ## Related project
 
 I have done similar project with different exmaples on [Oracle JET 9](https://github.com/zemian/oraclejet-for-vuejs-examples) as well. These examples are implemented using older KnockoutJS view models instead of Preact VDOM implementation.
